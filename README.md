@@ -8,7 +8,8 @@ requirements, that specify what widegets and how many of each are required.
 
 <h3>Challenges:</h3>
 This is my second program using tkinter, so there has been a huge learning curve. Creating the second
-window proved to be one of my biggest challenges.
+window proved to be one of my biggest challenges, but I'm currently working on ironing out the input validation and error messages.
+If I have extra time, I also want to make the images more uniform in appearance but it isn't a high priority.
 
 
 <h3>How to Install and Run the Project:</h3>
@@ -17,6 +18,9 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install RollMas
 
 
 <H3>How to Use the Project:</H3>
+<p>Use it for fun! The goal is to have an easy way to roll dice when it isn't physically possible to do so. On the initial screen, enter the quantities you would like to roll. You can choose between 0 and 50 of any kind of die. You can also set a custom die with any number of sides, and roll up to 50 of it as well.When ready, click ‘Roll’ and your results will be displayed in a new window. ‘Reset’ clears all input on the screen, and ‘Quit’ closes the program.</p>
+<img src="https://github.com/loritheladybug7/SDEV140/assets/155836726/2b40bfd9-bda7-4390-b8aa-5719fb734a41">
+
 
 ---------------
 <h3>MIT License</h3>
