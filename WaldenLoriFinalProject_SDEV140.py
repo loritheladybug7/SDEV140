@@ -5,29 +5,33 @@ SDEV 140
 This program will allow a user to choose what size and how many dice to roll 
 (dice with sides of 4, 6, 8, 10, 12, 20, 100, or custom), 
 and then output the results in a new window.
+The program will only accept 0-50 in the spinboxes (for the quantities) and only positive
+integers for the custom number of sides.
 """
+
 # Import Modules Needed
-import random
-import sys
-import os
-import tkinter as tk
-from tkinter import *
-from tkinter import messagebox
+import random            # To roll the dice
+import sys               # To reset the program
+import os                # To reset the program
+import tkinter as tk     # To create the GUI
+from tkinter import *    # To import all functions from tkinter
+from tkinter import messagebox   # To create the alert window
 
 
-# Create input window
+# Create input/main window
 root = tk.Tk()
-root.title("RollMaster: Dice-Flinging Delight")
+root.title("RollMaster")
+
 
 # Create instructions
 intro_label = tk.Label(root, text="Please select the quantity of each dice")
-intro_label.grid(row=0, column=0, columnspan=2)
+intro_label.grid(row=0, column=0, columnspan=3)
 intro2_label = tk.Label(root, text="you would like to roll (up to 50).")
-intro2_label.grid(row=1, column=0, columnspan=2)
+intro2_label.grid(row=1, column=0, columnspan=3)
 exp_label = tk.Label(root, text="Dice are identified by the number of sides - ")
-exp_label.grid(row=2, column=0, columnspan=2)
+exp_label.grid(row=2, column=0, columnspan=3)
 exp2_label = tk.Label(root, text="a d4 has 4 sides and can roll 1-4.")
-exp2_label.grid(row=3, column=0, columnspan=2)
+exp2_label.grid(row=3, column=0, columnspan=3)
 
 
 # Function for input validation
@@ -35,7 +39,8 @@ def validate_input(value):
     if value.isdigit():
         if 0 <= int(value) <= 50:
             return True
-    return False
+    messagebox.showerror("Error", "Please enter a valid integer for the number of sides.")
+    return
     
 # Create labels and entry fields for input
   # d4
@@ -106,7 +111,7 @@ d100_entry = Spinbox(root, from_=0, to=50, width=3, validate="key",
 d100_entry.grid(row=11, column=1)
 
   # d custom
-custom_header_label = tk.Label(root, text="Custom")
+custom_header_label = tk.Label(root, text="Custom", font='bold')
 custom_header_label.grid(row=12, column=0, columnspan=3)
 custom_sides_label = tk.Label(root, text="Number of sides: ")  
 custom_sides_label.grid(row=13, column=0)
@@ -120,7 +125,7 @@ custom_quantity_entry.grid(row=14, column=1)
 
 custom_image = PhotoImage(file="custom_50.gif")
 custom_img = Label(root, image=custom_image)
-custom_img.grid(row=11, column=2, rowspan=2)
+custom_img.grid(row=13, column=2, rowspan=2)
 
 
 # Create a the results to be displayed later
@@ -146,9 +151,13 @@ def roll_dice():
         # Custom dice
         custom_sides = int(custom_sides_entry.get())
         custom_quantity = int(custom_quantity_entry.get())
-        if custom_sides > 0 and custom_quantity > 0:
+        if custom_sides =="":
+          pass
+        elif custom_sides > 0 and custom_quantity > 0:
             dice_quantities[custom_sides] = custom_quantity
-
+        else:                                     # If custom sides or quantity is invalid
+            messagebox.showerror("Error", "Please enter a valid integer for the number of sides.")
+            return
         # Roll dice and display results
         result = ""
         for sides, quantity in dice_quantities.items():
@@ -158,7 +167,10 @@ def roll_dice():
 
         result_text.insert(tk.END, result)
     except ValueError:
-        messagebox.showerror("Error", "Please enter a valid integer for the number of sides.")    
+        messagebox.showerror("Error", "Please enter a valid integer for the number of sides.")
+        return
+    open_results_window()
+
 
 # Function to open a new window with the results
 def open_results_window():
@@ -169,21 +181,20 @@ def open_results_window():
     result_label = Label(new_window, text=result_text.get("1.0", tk.END))
     result_label.grid(row=1, column=0, columnspan=2)
     # Buttons to Roll Again or Quit
-    button_reset = Button(new_window, text="Reset", command=restart_program)
+    button_reset = Button(new_window, text="Reset", command=reset_program)
     button_reset.grid(row=3, column=0)
     button_quit = Button(new_window, text="Quit", command=root.quit)
     button_quit.grid(row=3, column=1)
 
-# Function to restart program
-def restart_program(): 
+# Function to reset program
+def reset_program(): 
     python = sys.executable 
     os.execl(python, python, * sys.argv)
 
 # Action buttons- Roll, Reset, Quit
-button_roll = Button(root, text="Roll", 
-                            command=lambda:[roll_dice(),open_results_window()])
-button_roll.grid(row=22, column=0, columnspan=2)
-button_reset = Button(root, text="Reset", command=restart_program)
+button_roll = Button(root, text="Roll", command=roll_dice)
+button_roll.grid(row=22, column=0, columnspan=3)
+button_reset = Button(root, text="Reset", command=reset_program)
 button_reset.grid(row=23, column=0)
 button_quit = Button(root, text="Quit", command=root.quit)
 button_quit.grid(row=23, column=1)
