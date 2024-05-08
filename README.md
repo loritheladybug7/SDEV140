@@ -7,7 +7,7 @@ two windows. There are a handful of other requirements, that specify what widget
 
 <h3>Challenges:</h3>
 This is my second program using tkinter, so there has been a huge learning curve. Creating the second
-window proved to be one of my biggest challenges, but I'm currently working on ironing out the input validation and error messages. The current version gives the error notification, but still completes the program, instead of starting at the beginning.
+window proved to be one of my biggest challenges, but I'm currently working on ironing out the input validation and error messages. The current version gives the error notification and stops the function, but only gives one error message (not two different ones).
 
 If I have extra time, I also want to make the images more uniform in appearance but it isn't a high priority.
 
