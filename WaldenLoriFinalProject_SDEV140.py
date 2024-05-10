@@ -149,15 +149,18 @@ def roll_dice():
         }
 
         # Custom dice
-        custom_sides = int(custom_sides_entry.get())
-        custom_quantity = int(custom_quantity_entry.get())
-        if custom_sides =="":
-          pass
-        elif custom_sides > 0 and custom_quantity > 0:
-            dice_quantities[custom_sides] = custom_quantity
-        else:                                     # If custom sides or quantity is invalid
-            messagebox.showerror("Error", "Please enter a valid integer for the number of sides.")
-            return
+        custom_sides = custom_sides_entry.get()
+        if custom_sides and int(custom_sides) > 0:
+            custom_sides = int(custom_sides)
+            custom_quantity = int(custom_quantity_entry.get())
+            if custom_quantity > 0:
+                dice_quantities[custom_sides] = custom_quantity
+            else:
+                messagebox.showerror("Error", "Please enter a valid integer.")
+                return
+        else:
+            pass
+            
         # Roll dice and display results
         result = ""
         for sides, quantity in dice_quantities.items():
